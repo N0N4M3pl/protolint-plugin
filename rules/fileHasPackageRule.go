@@ -11,7 +11,6 @@ import (
 
 type FileHasPackageRule struct {
 	verbose  bool
-	fixMode  bool
 	severity rule.Severity
 }
 

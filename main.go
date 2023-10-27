@@ -29,5 +29,19 @@ func main() {
 		) rule.Rule {
 			return rules.NewFileHasPackageRule(verbose, rule.SeverityError)
 		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
+			return rules.NewOptionJavaPackageUselessRule(verbose, rule.SeverityError)
+		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
+			return rules.NewPackageNamePrefixRule(verbose, rule.SeverityError)
+		}),
 	)
 }
