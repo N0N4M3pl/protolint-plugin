@@ -4,7 +4,7 @@ module github.com/N0N4M3pl/protolint-plugin
 
 require (
 	github.com/yoheimuta/go-protoparser/v4 v4.9.0
-	github.com/yoheimuta/protolint v0.46.2
+	github.com/yoheimuta/protolint v0.46.3
 )
 
 require (
@@ -20,7 +20,6 @@ require (
 	golang.org/x/net v0.17.0 // indirect
 	golang.org/x/sys v0.13.0 // indirect
 	golang.org/x/text v0.13.0 // indirect
-	google.golang.org/genproto v0.0.0-20231012201019-e917dd12ba7a // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20231016165738-49dd2c1f3d0b // indirect
 	google.golang.org/grpc v1.59.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
