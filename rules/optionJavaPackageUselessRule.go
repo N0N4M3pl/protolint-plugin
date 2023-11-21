@@ -11,16 +11,13 @@ import (
 )
 
 type OptionJavaPackageUselessRule struct {
-	verbose  bool
 	severity rule.Severity
 }
 
 func NewOptionJavaPackageUselessRule(
-	verbose bool,
 	severity rule.Severity,
 ) OptionJavaPackageUselessRule {
 	return OptionJavaPackageUselessRule{
-		verbose:  verbose,
 		severity: severity,
 	}
 }

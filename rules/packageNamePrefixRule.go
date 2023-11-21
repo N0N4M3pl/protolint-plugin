@@ -10,18 +10,23 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
+var defaultPrefix = "pl."
+
 type PackageNamePrefixRule struct {
-	verbose  bool
 	severity rule.Severity
+	prefix   string
 }
 
 func NewPackageNamePrefixRule(
-	verbose bool,
 	severity rule.Severity,
+	prefix string,
 ) PackageNamePrefixRule {
+	if len(prefix) == 0 {
+		prefix = defaultPrefix
+	}
 	return PackageNamePrefixRule{
-		verbose:  verbose,
 		severity: severity,
+		prefix:   prefix,
 	}
 }
 
@@ -30,7 +35,7 @@ func (r PackageNamePrefixRule) ID() string {
 }
 
 func (r PackageNamePrefixRule) Purpose() string {
-	return "Verifies that the package starts with prefix."
+	return "Verifies that the package starts with specified prefix."
 }
 
 func (r PackageNamePrefixRule) IsOfficial() bool {
@@ -46,6 +51,7 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 	v := &packageNamePrefixVisitor{
 		BaseAddVisitor: base,
+		prefix:         r.prefix,
 	}
 
 	return visitor.RunVisitor(v, proto, r.ID())
@@ -53,11 +59,12 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 type packageNamePrefixVisitor struct {
 	*visitor.BaseAddVisitor
+	prefix string
 }
 
 func (v *packageNamePrefixVisitor) VisitPackage(p *parser.Package) bool {
-	if !strings.HasPrefix(p.Name, "") {
-		v.AddFailuref(p.Meta.Pos, "Package name %q must starts with ", p.Name)
+	if !strings.HasPrefix(p.Name, v.prefix) {
+		v.AddFailuref(p.Meta.Pos, "Package name %q must starts with %q", p.Name, v.prefix)
 	}
 
 	return false

@@ -10,16 +10,13 @@ import (
 )
 
 type FileHasPackageRule struct {
-	verbose  bool
 	severity rule.Severity
 }
 
 func NewFileHasPackageRule(
-	verbose bool,
 	severity rule.Severity,
 ) FileHasPackageRule {
 	return FileHasPackageRule{
-		verbose:  verbose,
 		severity: severity,
 	}
 }
@@ -29,7 +26,7 @@ func (r FileHasPackageRule) ID() string {
 }
 
 func (r FileHasPackageRule) Purpose() string {
-	return "Verifies that a fiel has package."
+	return "Verifies that a file has package."
 }
 
 func (r FileHasPackageRule) IsOfficial() bool {
