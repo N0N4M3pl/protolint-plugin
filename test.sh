@@ -1,0 +1,1 @@
+protolint lint -plugin "bin/plugin.exe -go_style=false" -config_path=test/.protolint.yaml test/proto/

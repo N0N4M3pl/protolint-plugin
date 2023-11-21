@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package pl.otm.hello.v1;
+
+service HelloService {
+    rpc SayHello (HelloRequest) returns (HelloResponse);
+}
+
+message HelloRequest {
+
+}
+
+message HelloResponse {
+
+}

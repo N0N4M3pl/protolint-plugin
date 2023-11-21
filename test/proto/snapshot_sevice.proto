@@ -1,0 +1,25 @@
+syntax = "proto3";
+
+package pl.otm.hello.v1;
+
+service SnapshotService {
+    rpc GiveMeSnapshot (SnapshotRequest) returns (SnapshotResponse);
+}
+
+message SnapshotRequest {
+}
+
+message SnapshotResponse {
+    repeated Item items = 0;
+}
+
+message Item {
+    int32 id = 0;
+    string label = 1;
+    repeated SubItem items = 2;
+}
+
+message SubItem {
+    int32 id = 0;
+    string label = 1;
+}
