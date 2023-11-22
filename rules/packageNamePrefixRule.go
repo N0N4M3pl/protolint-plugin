@@ -1,7 +1,7 @@
 package rules
 
 import (
-	"strings"
+	"regexp"
 
 	"github.com/yoheimuta/go-protoparser/v4/parser"
 
@@ -10,23 +10,26 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
-var defaultPrefix = "pl."
+var defaultRgxpStr = "^pl\\..*"
 
 type PackageNamePrefixRule struct {
 	severity rule.Severity
-	prefix   string
+	rgxpStr  string
+	rgxp     *regexp.Regexp
 }
 
 func NewPackageNamePrefixRule(
 	severity rule.Severity,
-	prefix string,
+	rgxpStr string,
 ) PackageNamePrefixRule {
-	if len(prefix) == 0 {
-		prefix = defaultPrefix
+	if len(rgxpStr) == 0 {
+		rgxpStr = defaultRgxpStr
 	}
+	rgxp := regexp.MustCompile(rgxpStr)
 	return PackageNamePrefixRule{
 		severity: severity,
-		prefix:   prefix,
+		rgxpStr:  rgxpStr,
+		rgxp:     rgxp,
 	}
 }
 
@@ -51,7 +54,8 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 	v := &packageNamePrefixVisitor{
 		BaseAddVisitor: base,
-		prefix:         r.prefix,
+		rgxp:           r.rgxp,
+		rgxpStr:        r.rgxpStr,
 	}
 
 	return visitor.RunVisitor(v, proto, r.ID())
@@ -59,12 +63,13 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 type packageNamePrefixVisitor struct {
 	*visitor.BaseAddVisitor
-	prefix string
+	rgxp    *regexp.Regexp
+	rgxpStr string
 }
 
 func (v *packageNamePrefixVisitor) VisitPackage(p *parser.Package) bool {
-	if !strings.HasPrefix(p.Name, v.prefix) {
-		v.AddFailuref(p.Meta.Pos, "Package name %q must starts with %q", p.Name, v.prefix)
+	if !(v.rgxp.MatchString(p.Name)) {
+		v.AddFailuref(p.Meta.Pos, "Package name %q must match with %q", p.Name, v.rgxpStr)
 	}
 
 	return false
