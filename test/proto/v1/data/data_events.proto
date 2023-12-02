@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package pl.otm.hello.v1;
+
+enum DataEvent {
+  DATA_EVENT_NOT_SET = 0;
+  DATA_EVENT_SNAPSHOT = 1;
+  DATA_EVENT_NEW = 2;
+  DATA_EVENT_UPDATE = 3;
+  DATA_EVENT_DELETE = 4;
+}

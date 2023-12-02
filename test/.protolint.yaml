@@ -21,6 +21,8 @@ lint:
     #   - OPTION_JAVA_PACKAGE_USELESS
     #   - PACKAGE_NAME_PREFIX
     #   - RPC_REQ_RES_NAME_SUFFIX
+    #   - IMPORT_AVOID_TYPE_COMMON
+    #   - REPEATED_FIELD_IN_RPC_MESSAGE
 
   # Linter rules option.
   rules_option:
@@ -34,10 +36,10 @@ lint:
     # INDENT rule option.
     indent:
       # Available styles are 4(4-spaces), 2(2-spaces) or tab.
-      style: 4
+      style: 2
       # Specifies if it should stop considering and inserting new lines at the appropriate positions
       # when the inner elements are on the same line. Default is false.
-      not_insert_newline: true
+      # not_insert_newline: true
 
     # FILE_NAMES_LOWER_SNAKE_CASE rule option.
     file_names_lower_snake_case:
@@ -51,7 +53,7 @@ lint:
 
     # ENUM_FIELD_NAMES_ZERO_VALUE_END_WITH rule option.
     enum_field_names_zero_value_end_with:
-      suffix: INVALID
+      suffix: NOT_SET
 
     # SERVICE_NAMES_END_WITH rule option.
     service_names_end_with:

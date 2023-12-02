@@ -3,7 +3,7 @@ package main
 import (
 	"flag"
 
-	"github.com/N0N4M3pl/protolint-plugin/rules"
+	"github.com/N0N4M3pl/protolint-plugin/internal/rules"
 	"github.com/yoheimuta/protolint/linter/rule"
 	"github.com/yoheimuta/protolint/plugin"
 )
@@ -41,7 +41,7 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
-			return rules.NewPackageNamePrefixRule(rule.SeverityError, "pl.")
+			return rules.NewPackageNamePrefixRule(rule.SeverityError, "^pl\\..*")
 		}),
 
 		plugin.RuleGen(func(
@@ -49,6 +49,13 @@ func main() {
 			fixMode bool,
 		) rule.Rule {
 			return rules.NewRPCReqResNameSuffixRule(rule.SeverityError, "Request", "Response")
+		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
+			return rules.NewImportAvoidTypeCommonRule(rule.SeverityNote, nil)
 		}),
 	)
 }

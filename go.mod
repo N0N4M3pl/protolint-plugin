@@ -9,6 +9,7 @@ require (
 
 require (
 	github.com/fatih/color v1.15.0 // indirect
+	github.com/gertd/go-pluralize v0.2.0 // indirect
 	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/hashicorp/go-hclog v1.5.0 // indirect
 	github.com/hashicorp/go-plugin v1.5.2 // indirect

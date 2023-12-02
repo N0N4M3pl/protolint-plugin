@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package pl.otm.hello.v1;
+
+import "../data/data_events.proto";
+import "../data/data_commons.proto";
+import "../data/data_empty.proto";
+
+service SnapshotService {
+  rpc GiveMeSnapshot (SnapshotRequest) returns (stream SnapshotResponse);
+}
+
+message SnapshotRequest {
+}
+
+message SnapshotResponse {
+  events.DataEvent data_event = 1;
+  repeated commons.Item items = 2;
+  repeated group Groups = 3 {
+    int32 id = 1;
+    string label = 2;
+  }
+}

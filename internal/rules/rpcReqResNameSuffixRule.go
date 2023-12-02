@@ -80,13 +80,5 @@ func (v *rpcReqResNameSuffixVisitor) VisitRPC(rpc *parser.RPC) bool {
 		v.AddFailuref(rpc.RPCResponse.Meta.Pos, "RPC Response name %q must ends with %q", rpc.RPCResponse.MessageType, v.responseSuffix)
 	}
 
-	// rpc.RPCRequest.MessageType
-	// if v.convention == config.ConventionLowerCamel && !strs.IsLowerCamelCase(rpc.RPCName) {
-	// 	v.AddFailuref(rpc.Meta.Pos, "RPC name %q must be LowerCamelCase", rpc.RPCName)
-	// } else if v.convention == config.ConventionUpperSnake && !strs.IsUpperSnakeCase(rpc.RPCName) {
-	// 	v.AddFailuref(rpc.Meta.Pos, "RPC name %q must be UpperSnakeCase", rpc.RPCName)
-	// } else if v.convention == config.ConventionLowerSnake && !strs.IsLowerSnakeCase(rpc.RPCName) {
-	// 	v.AddFailuref(rpc.Meta.Pos, "RPC name %q must be LowerSnakeCase", rpc.RPCName)
-	// }
 	return false
 }
