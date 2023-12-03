@@ -1,10 +1,12 @@
 syntax = "proto3";
 
-package pl.otm.hello.v1;
+package n0n4m3pl.protolint_plugin.snapshot.v1;
 
-import "../data/data_events.proto";
-import "../data/data_commons.proto";
-import "../data/data_empty.proto";
+import "test/proto/v1/data/commons.proto";
+// import "test/proto/v1/data/empty.proto";
+import "test/proto/v1/data/events.proto";
+
+option go_package = "n0n4m3pl.protolint_plugin.snapshot.v1";
 
 service SnapshotService {
   rpc GiveMeSnapshot (SnapshotRequest) returns (stream SnapshotResponse);
@@ -14,10 +16,10 @@ message SnapshotRequest {
 }
 
 message SnapshotResponse {
-  events.DataEvent data_event = 1;
-  repeated commons.Item items = 2;
-  repeated group Groups = 3 {
-    int32 id = 1;
-    string label = 2;
-  }
+  n0n4m3pl.protolint_plugin.data.v1.DataEvent data_event = 1;
+  repeated n0n4m3pl.protolint_plugin.data.v1.Item items = 2;
+  // repeated group Groups = 3 {
+  //   int32 id = 1;
+  //   string label = 2;
+  // }
 }

@@ -22,7 +22,7 @@ lint:
     #   - PACKAGE_NAME_PREFIX
     #   - RPC_REQ_RES_NAME_SUFFIX
     #   - IMPORT_AVOID_TYPE_COMMON
-    #   - REPEATED_FIELD_IN_RPC_MESSAGE
+    #   - IMPORT_NOT_USED
 
   # Linter rules option.
   rules_option:

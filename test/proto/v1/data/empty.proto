@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package n0n4m3pl.protolint_plugin.data.v1;
+
+option go_package = "n0n4m3pl.protolint_plugin.data.v1";
+
+// must be empty --> imported but not used (because is empty)

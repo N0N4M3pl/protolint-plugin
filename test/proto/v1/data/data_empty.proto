@@ -1,5 +1,0 @@
-syntax = "proto3";
-
-package pl.otm.hello.v1;
-
-// must be empty --> imported but not used (because is empty)

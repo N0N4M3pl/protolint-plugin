@@ -10,7 +10,7 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
-var defaultRgxpStr = "^pl\\..*"
+var defaultPackageNamePrefixRgxpStr = "^pl\\..*"
 
 type PackageNamePrefixRule struct {
 	severity rule.Severity
@@ -23,7 +23,7 @@ func NewPackageNamePrefixRule(
 	rgxpStr string,
 ) PackageNamePrefixRule {
 	if len(rgxpStr) == 0 {
-		rgxpStr = defaultRgxpStr
+		rgxpStr = defaultPackageNamePrefixRgxpStr
 	}
 	rgxp := regexp.MustCompile(rgxpStr)
 	return PackageNamePrefixRule{
@@ -69,7 +69,7 @@ type packageNamePrefixVisitor struct {
 
 func (v *packageNamePrefixVisitor) VisitPackage(p *parser.Package) bool {
 	if !(v.rgxp.MatchString(p.Name)) {
-		v.AddFailuref(p.Meta.Pos, "Package name %q must match with %q", p.Name, v.rgxpStr)
+		v.AddFailuref(p.Meta.Pos, "Package name %q must starts with specified prefix (match with %q)", p.Name, v.rgxpStr)
 	}
 
 	return false

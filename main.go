@@ -41,7 +41,14 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
-			return rules.NewPackageNamePrefixRule(rule.SeverityError, "^pl\\..*")
+			return rules.NewPackageNamePrefixRule(rule.SeverityError, "^n0n4m3pl\\.protolint_plugin\\..*")
+		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
+			return rules.NewPackageNameSuffixVersionRule(rule.SeverityError, "")
 		}),
 
 		plugin.RuleGen(func(
