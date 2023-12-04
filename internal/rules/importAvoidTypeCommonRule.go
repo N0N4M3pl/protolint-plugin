@@ -70,7 +70,7 @@ type importAvoidTypeCommonVisitor struct {
 }
 
 func (v *importAvoidTypeCommonVisitor) VisitImport(i *parser.Import) (next bool) {
-	filename := strings.Trim(i.Location, `"`)
+	filename := strings.Trim(i.Location, "\"")
 	parts := strings.Split(filename, "/")
 	filename = parts[len(parts)-1]
 	parts = strings.Split(filename, ".")
