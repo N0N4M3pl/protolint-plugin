@@ -10,8 +10,6 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
-var defaultPackageNameSuffixVersionRgxpStr = ".*\\.v((\\d+)|(\\d+test.*)|(\\d+(alpha|beta)))$"
-
 type PackageNameSuffixVersionRule struct {
 	severity rule.Severity
 	rgxpStr  string
@@ -22,8 +20,9 @@ func NewPackageNameSuffixVersionRule(
 	severity rule.Severity,
 	rgxpStr string,
 ) PackageNameSuffixVersionRule {
+	var defaultRgxpStr = ".*\\.v((\\d+)|(\\d+test.*)|(\\d+(alpha|beta)))$"
 	if len(rgxpStr) == 0 {
-		rgxpStr = defaultPackageNameSuffixVersionRgxpStr
+		rgxpStr = defaultRgxpStr
 	}
 	rgxp := regexp.MustCompile(rgxpStr)
 	return PackageNameSuffixVersionRule{

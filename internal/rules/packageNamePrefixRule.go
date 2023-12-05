@@ -10,8 +10,6 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
-var defaultPackageNamePrefixRgxpStr = "^pl\\..*"
-
 type PackageNamePrefixRule struct {
 	severity rule.Severity
 	rgxpStr  string
@@ -22,8 +20,9 @@ func NewPackageNamePrefixRule(
 	severity rule.Severity,
 	rgxpStr string,
 ) PackageNamePrefixRule {
+	var defaultRgxpStr = "^pl\\..*"
 	if len(rgxpStr) == 0 {
-		rgxpStr = defaultPackageNamePrefixRgxpStr
+		rgxpStr = defaultRgxpStr
 	}
 	rgxp := regexp.MustCompile(rgxpStr)
 	return PackageNamePrefixRule{
@@ -54,8 +53,8 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 	v := &packageNamePrefixVisitor{
 		BaseAddVisitor: base,
-		rgxp:           r.rgxp,
 		rgxpStr:        r.rgxpStr,
+		rgxp:           r.rgxp,
 	}
 
 	return visitor.RunVisitor(v, proto, r.ID())
@@ -63,8 +62,8 @@ func (r PackageNamePrefixRule) Apply(proto *parser.Proto) ([]report.Failure, err
 
 type packageNamePrefixVisitor struct {
 	*visitor.BaseAddVisitor
-	rgxp    *regexp.Regexp
 	rgxpStr string
+	rgxp    *regexp.Regexp
 }
 
 func (v *packageNamePrefixVisitor) VisitPackage(p *parser.Package) bool {

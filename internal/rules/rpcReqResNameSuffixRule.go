@@ -10,9 +10,6 @@ import (
 	"github.com/yoheimuta/protolint/linter/visitor"
 )
 
-var defaultRequestSuffix = "Req"
-var defaultResponseSuffix = "Res"
-
 type RPCReqResNameSuffixRule struct {
 	severity       rule.Severity
 	requestSuffix  string
@@ -24,6 +21,8 @@ func NewRPCReqResNameSuffixRule(
 	requestSuffix string,
 	responseSuffix string,
 ) RPCReqResNameSuffixRule {
+	var defaultRequestSuffix = "Request"
+	var defaultResponseSuffix = "Response"
 	if len(requestSuffix) == 0 {
 		requestSuffix = defaultRequestSuffix
 	}

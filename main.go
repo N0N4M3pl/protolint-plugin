@@ -20,6 +20,13 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
+			return rules.NewFieldTypeOutsidePackageRule(rule.SeverityError, "^(google)\\..*")
+		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
 			return rules.NewFileHasPackageRule(rule.SeverityError)
 		}),
 
@@ -27,7 +34,7 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
-			return rules.NewImportAvoidTypeCommonRule(rule.SeverityNote, nil)
+			return rules.NewImportAvoidCommonRule(rule.SeverityNote, nil)
 		}),
 
 		plugin.RuleGen(func(
@@ -55,7 +62,14 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
-			return rules.NewRPCReqResNameSuffixRule(rule.SeverityError, "Request", "Response")
+			return rules.NewRPCReqResNameSuffixRule(rule.SeverityError, "", "")
+		}),
+
+		plugin.RuleGen(func(
+			verbose bool,
+			fixMode bool,
+		) rule.Rule {
+			return rules.NewRPCStreamBlockedInPackageRule(rule.SeverityError, "\\.public\\.", "")
 		}),
 	)
 }

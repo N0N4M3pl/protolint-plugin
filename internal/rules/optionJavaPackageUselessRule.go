@@ -56,6 +56,7 @@ type optionJavaPackageUselessVisitor struct {
 
 func (v *optionJavaPackageUselessVisitor) VisitPackage(p *parser.Package) bool {
 	v.packageName = p.Name
+
 	return false
 }
 

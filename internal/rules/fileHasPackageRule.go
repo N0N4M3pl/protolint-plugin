@@ -56,11 +56,13 @@ type fileHasPackageVisitor struct {
 
 func (v *fileHasPackageVisitor) VisitSyntax(s *parser.Syntax) bool {
 	v.pos = s.Meta.Pos
+
 	return false
 }
 
 func (v *fileHasPackageVisitor) VisitPackage(p *parser.Package) bool {
 	v.hasPackage = true
+
 	return false
 }
 

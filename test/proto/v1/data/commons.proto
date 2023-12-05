@@ -1,15 +1,15 @@
 syntax = "proto3";
 
-package n0n4m3pl.protolint_plugin.data.v1;
+package n0n4m3pl.protolint_plugin.public.snapshot.v1;
 
 import "test/proto/v1/data/events.proto";
 
-option go_package = "n0n4m3pl.protolint_plugin.data.v1";
+option go_package = "n0n4m3pl.protolint_plugin.public.snapshot.v1";
 
 message Item {
   int32 id = 1;
   string label = 2;
-  n0n4m3pl.protolint_plugin.data.v1.DataEvent data_event = 3;
+  n0n4m3pl.protolint_plugin.public.snapshot.v1.DataEvent data_event = 3;
   repeated SubItem sub_items = 4;
 }
 

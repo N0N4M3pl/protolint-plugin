@@ -1,10 +1,11 @@
 syntax = "proto3";
 
-package n0n4m3pl.protolint_plugin.snapshot.v1;
+package n0n4m3pl.protolint_plugin.public.snapshot.v1;
 
+import "google/protobuf/timestamp.proto";
 import "test/proto/v1/data/commons.proto";
-// import "test/proto/v1/data/empty.proto";
 import "test/proto/v1/data/events.proto";
+// import "test/proto/v1/data/empty.proto";
 
 option go_package = "n0n4m3pl.protolint_plugin.snapshot.v1";
 
@@ -16,10 +17,16 @@ message SnapshotRequest {
 }
 
 message SnapshotResponse {
-  n0n4m3pl.protolint_plugin.data.v1.DataEvent data_event = 1;
-  repeated n0n4m3pl.protolint_plugin.data.v1.Item items = 2;
+  n0n4m3pl.protolint_plugin.public.snapshot.v1.DataEvent data_event = 1;
+  repeated n0n4m3pl.protolint_plugin.public.snapshot.v1.Item items = 2;
+  google.protobuf.Timestamp time = 3;
+  n0n4m3pl.protolint_plugin.public.snapshot.v1.MyType my_type = 4;
   // repeated group Groups = 3 {
   //   int32 id = 1;
   //   string label = 2;
   // }
+}
+
+message MyType {
+  string name = 1;
 }

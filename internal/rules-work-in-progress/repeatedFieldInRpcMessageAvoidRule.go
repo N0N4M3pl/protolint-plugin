@@ -66,32 +66,32 @@ func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitRPC(rpc *parser.RPC) bool {
 	return false
 }
 
-func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitMessage(message *parser.Message) bool {
-	v.messages[message.MessageName] = message
+func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitMessage(m *parser.Message) bool {
+	v.messages[m.MessageName] = m
 
-	for i, item := range message.MessageBody {
+	for i, item := range m.MessageBody {
 		// v.AddFailuref(message.Meta.Pos, "[%v]: %s | %T", i, reflect.TypeOf(item).String(), item)
 		switch itemType := item.(type) {
 		case *parser.Field:
-			v.AddFailuref(message.Meta.Pos, "[%v]: Field | FieldName=%s", i, itemType.FieldName)
+			v.AddFailuref(m.Meta.Pos, "[%v]: Field | FieldName=%s", i, itemType.FieldName)
 		default:
-			v.AddFailuref(message.Meta.Pos, "[%v]: item is %T", i, item)
+			v.AddFailuref(m.Meta.Pos, "[%v]: item is %T", i, item)
 		}
 	}
 
 	return false
 }
 
-func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitField(field *parser.Field) bool {
-	if field.IsRepeated {
-		v.fields[field.FieldName] = field
+func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitField(f *parser.Field) bool {
+	if f.IsRepeated {
+		v.fields[f.FieldName] = f
 	}
 	return false
 }
 
-func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitGroupField(field *parser.GroupField) bool {
-	if field.IsRepeated {
-		v.groupFields[field.GroupName] = field
+func (v *repeatedFieldInRpcMessageAvoidVisitor) VisitGroupField(f *parser.GroupField) bool {
+	if f.IsRepeated {
+		v.groupFields[f.GroupName] = f
 	}
 	return false
 }
