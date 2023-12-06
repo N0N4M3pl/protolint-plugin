@@ -16,13 +16,15 @@ lint:
       # - ENUM_FIELDS_HAVE_COMMENT
       # - FILE_HAS_COMMENT
       - SYNTAX_CONSISTENT
-    # remove:
-    #   - FILE_HAS_PACKAGE
-    #   - OPTION_JAVA_PACKAGE_USELESS
-    #   - PACKAGE_NAME_PREFIX
-    #   - RPC_REQ_RES_NAME_SUFFIX
-    #   - IMPORT_AVOID_TYPE_COMMON
-    #   - IMPORT_NOT_USED
+    remove:
+      # - FIELD_TYPE_OUTSIDE_PACKAGE
+      # - FILE_HAS_PACKAGE
+      - IMPORT_AVOID_COMMON
+      # - OPTION_JAVA_PACKAGE_USELESS
+      # - PACKAGE_NAME_PREFIX
+      # - PACKAGE_NAME_SUFFIX_VERSION
+      # - RPC_REQ_RES_NAME_SUFFIX
+      # - RPC_STREAM_BLOCKED_IN_PACKAGE
 
   # Linter rules option.
   rules_option:

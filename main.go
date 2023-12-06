@@ -20,7 +20,9 @@ func main() {
 			verbose bool,
 			fixMode bool,
 		) rule.Rule {
-			return rules.NewFieldTypeOutsidePackageRule(rule.SeverityError, "^(google)\\..*")
+			return rules.NewFieldTypeOutsidePackageRule(rule.SeverityError, []string{
+				"google.protobuf.",
+			})
 		}),
 
 		plugin.RuleGen(func(

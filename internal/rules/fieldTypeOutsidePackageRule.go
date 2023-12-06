@@ -1,7 +1,6 @@
 package rules
 
 import (
-	"regexp"
 	"strings"
 
 	"github.com/yoheimuta/go-protoparser/v4/parser"
@@ -11,24 +10,23 @@ import (
 )
 
 type FieldTypeOutsidePackageRule struct {
-	severity            rule.Severity
-	allowedTypesRgxpStr string
-	allowedTypesRgxp    *regexp.Regexp
+	severity     rule.Severity
+	allowedTypes []string
 }
 
 func NewFieldTypeOutsidePackageRule(
 	severity rule.Severity,
-	allowedTypesRgxpStr string,
+	allowedTypes []string,
 ) FieldTypeOutsidePackageRule {
-	var defaultAllowedTypesRgxpStr = "^.*"
-	if len(allowedTypesRgxpStr) == 0 {
-		allowedTypesRgxpStr = defaultAllowedTypesRgxpStr
+	var defaultAllowedTypes = []string{
+		// "google.protobuf.",
 	}
-	allowedTypesRgxp := regexp.MustCompile(allowedTypesRgxpStr)
+	if len(allowedTypes) == 0 {
+		allowedTypes = defaultAllowedTypes
+	}
 	return FieldTypeOutsidePackageRule{
-		severity:            severity,
-		allowedTypesRgxpStr: allowedTypesRgxpStr,
-		allowedTypesRgxp:    allowedTypesRgxp,
+		severity:     severity,
+		allowedTypes: allowedTypes,
 	}
 }
 
@@ -52,9 +50,8 @@ func (r FieldTypeOutsidePackageRule) Apply(proto *parser.Proto) ([]report.Failur
 	base := visitor.NewBaseAddVisitor(r.ID(), string(r.Severity()))
 
 	v := &fieldTypeOutsidePackageVisitor{
-		BaseAddVisitor:      base,
-		allowedTypesRgxpStr: r.allowedTypesRgxpStr,
-		allowedTypesRgxp:    r.allowedTypesRgxp,
+		BaseAddVisitor: base,
+		allowedTypes:   r.allowedTypes,
 	}
 
 	return visitor.RunVisitor(v, proto, r.ID())
@@ -62,10 +59,9 @@ func (r FieldTypeOutsidePackageRule) Apply(proto *parser.Proto) ([]report.Failur
 
 type fieldTypeOutsidePackageVisitor struct {
 	*visitor.BaseAddVisitor
-	allowedTypesRgxpStr string
-	allowedTypesRgxp    *regexp.Regexp
-	packageName         string
-	fields              []*parser.Field
+	allowedTypes []string
+	packageName  string
+	fields       []*parser.Field
 }
 
 func (v *fieldTypeOutsidePackageVisitor) VisitPackage(p *parser.Package) bool {
@@ -83,13 +79,18 @@ func (v *fieldTypeOutsidePackageVisitor) VisitField(f *parser.Field) bool {
 }
 
 func (v *fieldTypeOutsidePackageVisitor) Finally() error {
+	allowedTypesWithPackage := append([]string{v.packageName}, v.allowedTypes...)
 	for _, f := range v.fields {
-		if len(v.packageName) > 0 {
-			if !strings.HasPrefix(f.Type, v.packageName) {
-				if !v.allowedTypesRgxp.MatchString(f.Type) {
-					v.AddFailuref(f.Meta.Pos, "Field type %q is outside package %q and not match with allowed types %q", f.Type, v.packageName, v.allowedTypesRgxpStr)
-				}
+		fieldType := f.Type
+		isAllowed := false
+		for _, allowedType := range allowedTypesWithPackage {
+			if strings.HasPrefix(fieldType, allowedType) {
+				isAllowed = true
+				break
 			}
+		}
+		if !isAllowed {
+			v.AddFailuref(f.Meta.Pos, "Field type %q is outside package %q and not match with allowed types %s", fieldType, v.packageName, v.allowedTypes)
 		}
 	}
 
